@@ -46,12 +46,30 @@ class Graph:
             return False
         elif (not check1 or not check2):
             raise CorruptDataException("Data corruption detected")
-            return
 
         return True
 
     def addEdgeStrict(self, fromNode, toNode):
-        pass
+        nfrom = self.__nodes.get(fromNode)
+        nto = self.__nodes.get(toNode)
+
+        if (nfrom is None):
+            print("'from' Node does not exist")
+            return
+
+        if (nto is None):
+            print("'to' Node does not exist")
+            return
+
+        check1 = nfrom.addToNode(nto)
+        check2 = nto.addToNode(nfrom)
+
+        if (not check1 and not check2):
+            return False
+        elif (not check1 or not check2):
+            raise CorruptDataException("Data corruption detected")
+
+        return True
 
     def depthFirstSearch(self):
         pass
@@ -62,7 +80,7 @@ class Graph:
 
 if __name__ == "__main__":
     x = Graph()
-    x.addEdge("jeff", "chu")
+    x.addEdgeStrict("jeff", "chu")
     print(x._Graph__nodes)
-    print(x._Graph__nodes["jeff"]._Node__toNode)
-    print(x._Graph__nodes["chu"]._Node__toNode)
+    # print(x._Graph__nodes["jeff"]._Node__toNode)
+    # print(x._Graph__nodes["chu"]._Node__toNode)
