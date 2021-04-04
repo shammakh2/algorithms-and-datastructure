@@ -1,7 +1,13 @@
 import Node
 
 
+# Create tests only for complex error prone implementations
+
 def test_addEdge():
+    """
+    Test for Graph.addEdge method.
+    """
+
     g = Node.Graph()
 
     assert g.addEdge("jeff", "claus") is True
