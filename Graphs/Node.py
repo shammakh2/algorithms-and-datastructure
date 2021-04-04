@@ -1,3 +1,6 @@
+class CorruptDataException(Exception):
+    pass
+
 
 class Node:
 
@@ -42,7 +45,7 @@ class Graph:
         if (not check1 and not check2):
             return False
         elif (not check1 or not check2):
-            # raise CorruptDataException("Data corruption detected")
+            raise CorruptDataException("Data corruption detected")
             return
 
         return True
