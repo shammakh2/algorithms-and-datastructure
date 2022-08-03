@@ -2,64 +2,40 @@ import java.util.Arrays;
 
 public class Main{
 
-    /* 1. First select a pivot (pivot selection code)
-       2. Swap pivot with the end of the array
-       3. Values left of pivot have to be less than pivtot, right of pivot more than pivot 
-       4. itemFromLeft > p and itemFromRight < p
-       5. Search for itemFromLeft and itemFromRight (first one matching condition) then swap them
-       6. Stop when index of item from left > index of item from right
-       7. swap itemFromLeft with pivot
-       8. Recursion
-    */
-
-    public static int temp;
-    public static int[] arr = {5,3,3,2,3,2,4,5,4,6,53};
-    public static int leng = arr.length;
-    public static int itemFromLeft; //index
-    public static int itemFromRight; //index
-
-    public static void swap(int a, int b) {
-        temp = a;
-        a = b;
-        b = temp;
+    public static void swap(int a, int b, int[] arr) {
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 
-    public static void Partition(int[] array,int len,int pivot_index) {
-       swap(array[pivot_index],array[len - 1]);
-       for(int i = 0; i < (len - 2);i++) {
-        if(i < pivot_index) {
-            if(array[i] > array[pivot_index]) {
-                 itemFromLeft = i;
-                };
+    public static void Quicksort(int[] arr, int low, int high) {
+        if(low < high) {
+            int partition_index = Partition(arr, low, high);
+            Quicksort(arr, low, partition_index - 1);
+            Quicksort(arr, partition_index + 1, high);
         }
-        if(i > pivot_index) {
-            if(array[i] < array[pivot_index]) {
-                 itemFromRight = i;
-                };
-        }
-        swap(array[itemFromLeft], array[itemFromRight]);
-        if(itemFromLeft < itemFromRight) {
-            // Reverse operator to account for swap
-            break;
-        }
-       }
-       swap(array[itemFromLeft], array[len - 1]); // Swap itemFromLeft and pivot
-       itemFromLeft = pivot_index; 
     }
-    public static void QuickSort(int[] array, int len, int pivot_index) {
-        Partition(array, len, pivot_index);
-        /*for(int i = 0;i < len;i++) {
-            if(i == pivot_index) {
-                continue;
+
+    public static int Partition(int[] arr, int low, int high) {
+        int i = low;
+        int pivot = arr[high];
+
+        for(int j = low; j < high;j++) {
+            if(arr[j] <= pivot) {
+                swap(i, j, arr);
+                i++;
             }
-            Partition(array, len, i);
-        }*/
-    }
+        }
+        swap(i, high, arr);
 
+        return i;
+    }
     public static void main(String[] args) {
-        String str_arr = Arrays.toString(arr);
-        System.out.printf("Array before sort: %s%n",str_arr);
-        QuickSort(arr, leng, 6);
-        System.out.printf("Array after sort: %s%n",str_arr);
+
+        // Driver code
+        int[] array = {323,5,12,56,7,8,9,3,5,3,6,8,3,2,4,6,7,9,25,5,3,3,4,7,9,0,42,7,42,12};
+        int len = array.length;
+        Quicksort(array, 0, (len - 1));
+        System.out.println(Arrays.toString(array));
     }
 }
